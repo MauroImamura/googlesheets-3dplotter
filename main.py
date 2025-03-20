@@ -48,29 +48,41 @@ class GraphApp:
         return headers, values
     
     def create_ui(self):
+        # Configure column weights to make the second column expand
+        self.root.columnconfigure(1, weight=1)
+
         # Add plot title input
         self.label_title = ttk.Label(self.root, text="Title:")
-        self.label_title.grid(row=0, column=0, padx=0, pady=5)
-        self.entry_title = ttk.Entry(self.root)
-        self.entry_title.grid(row=0, column=1, padx=10, pady=5)
+        self.label_title.grid(row=0, column=0, padx=10, pady=5, sticky="w")
+
+        self.entry_title = ttk.Entry(self.root, width=50)
+        self.entry_title.grid(row=0, column=1, padx=10, pady=5, sticky="ew")
 
         self.label_x = ttk.Label(self.root, text="Choose X axis:")
-        self.label_x.grid(row=1, column=0, padx=10, pady=5)
-        self.combo_x = ttk.Combobox(self.root, values=self.headers)
-        self.combo_x.grid(row=1, column=1, padx=10, pady=5)
-        
+        self.label_x.grid(row=1, column=0, padx=10, pady=5, sticky="w")
+
+        self.combo_x = ttk.Combobox(self.root, values=self.headers, width=47)
+        self.combo_x.grid(row=1, column=1, padx=10, pady=5, sticky="ew")
+
         self.label_y = ttk.Label(self.root, text="Choose Y axis:")
-        self.label_y.grid(row=2, column=0, padx=10, pady=5)
-        self.combo_y = ttk.Combobox(self.root, values=self.headers)
-        self.combo_y.grid(row=2, column=1, padx=10, pady=5)
-        
+        self.label_y.grid(row=2, column=0, padx=10, pady=5, sticky="w")
+
+        self.combo_y = ttk.Combobox(self.root, values=self.headers, width=47)
+        self.combo_y.grid(row=2, column=1, padx=10, pady=5, sticky="ew")
+
         self.label_z = ttk.Label(self.root, text="Choose Z axis:")
-        self.label_z.grid(row=3, column=0, padx=10, pady=5)
-        self.combo_z = ttk.Combobox(self.root, values=self.headers)
-        self.combo_z.grid(row=3, column=1, padx=10, pady=5)
-        
+        self.label_z.grid(row=3, column=0, padx=10, pady=5, sticky="w")
+
+        self.combo_z = ttk.Combobox(self.root, values=self.headers, width=47)
+        self.combo_z.grid(row=3, column=1, padx=10, pady=5, sticky="ew")
+
         self.button_plot = ttk.Button(self.root, text="Plot graph", command=self.plot_graph)
-        self.button_plot.grid(row=4, column=0, columnspan=2, pady=10)
+        self.button_plot.grid(row=4, column=0, columnspan=2, pady=10, sticky="ew")
+
+        # Footer Note
+        self.footer_label = ttk.Label(self.root, text="by Mauro Imamura @ 2025  [https://github.com/MauroImamura]", font=("TkDefaultFont", 8))
+        self.footer_label.grid(row=5, column=0, columnspan=2, pady=10, sticky="ew")
+        self.root.rowconfigure(5, weight=0) # Make footer row not expand.
     
     def plot_graph(self):
         col1 = self.headers.index(self.combo_x.get())
